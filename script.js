@@ -432,7 +432,7 @@ function phoneKey(phone){
   return digits.slice(-10);
 }
 
-const contacts=raw.trim().split('\n').map(l=>{const[n,p]=l.split('|');const phone=(p||'').trim();return{name:n.trim(),phone,photo:photosByPhone[phoneKey(phone)]||''}}).filter(c=>c.name&&c.phone).sort((a,b)=>a.name.localeCompare(b.name));
+let contacts=[];
 const favoriteNames=['Maa','Papa','Shobha Di','Jaynandan','Mama','Sarub Jhandapur','Jijaji'];
 const defaultFeatures={favorites:true,index:true,photos:true,groups:true};
 let features={...defaultFeatures,...JSON.parse(localStorage.getItem('contactFeatures')||'{}')};
@@ -697,7 +697,6 @@ function initLock(){
   setTimeout(()=>input.focus(),150);
 }
 
-document.getElementById('total').textContent=contacts.length+' total contacts';
 document.getElementById('search').addEventListener('input',e=>{
   activeAlpha=null;
   document.querySelectorAll('.a-btn').forEach(x=>x.classList.remove('active'));
@@ -714,6 +713,27 @@ initThemes();
 initProfilePhoto();
 initFeatures();
 initLock();
-buildAlpha();
-openLetters=new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
-applyFeatures();
+
+// contacts.json से data load करो
+fetch('contacts.json')
+  .then(r=>r.json())
+  .then(data=>{
+    contacts=data.map(c=>{
+      const phone=(c.phoneNumbers&&c.phoneNumbers[0]&&c.phoneNumbers[0].value)||c.phone||'';
+      const name=(c.names&&c.names[0]&&c.names[0].displayName)||c.name||'';
+      const photo=photosByPhone[phoneKey(phone)]||'';
+      return{name,phone,photo};
+    }).filter(c=>c.name&&c.phone).sort((a,b)=>a.name.localeCompare(b.name));
+    document.getElementById('total').textContent=contacts.length+' total contacts';
+    buildAlpha();
+    openLetters=new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
+    applyFeatures();
+  })
+  .catch(()=>{
+    // अगर contacts.json नहीं मिला तो raw data use करो
+    contacts=raw.trim().split('\n').map(l=>{const[n,p]=l.split('|');const phone=(p||'').trim();return{name:n.trim(),phone,photo:photosByPhone[phoneKey(phone)]||''}}).filter(c=>c.name&&c.phone).sort((a,b)=>a.name.localeCompare(b.name));
+    document.getElementById('total').textContent=contacts.length+' total contacts';
+    buildAlpha();
+    openLetters=new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
+    applyFeatures();
+  });
