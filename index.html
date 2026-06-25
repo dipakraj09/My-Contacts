@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="hi"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Contacts</title>
+<link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml,%3C%3Fxml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;%3F%3E%3Csvg width=&quot;1024&quot; height=&quot;1024&quot; viewBox=&quot;0 0 1024 1024&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cdefs%3E%3ClinearGradient id=&quot;bg&quot; x1=&quot;130&quot; y1=&quot;90&quot; x2=&quot;860&quot; y2=&quot;930&quot; gradientUnits=&quot;userSpaceOnUse&quot;%3E%3Cstop offset=&quot;0&quot; stop-color=&quot;%23FFB765&quot;/%3E%3Cstop offset=&quot;1&quot; stop-color=&quot;%23F18A2B&quot;/%3E%3C/linearGradient%3E%3Cfilter id=&quot;shadow&quot; x=&quot;-20%25&quot; y=&quot;-20%25&quot; width=&quot;140%25&quot; height=&quot;140%25&quot;%3E%3CfeDropShadow dx=&quot;0&quot; dy=&quot;26&quot; stdDeviation=&quot;28&quot; flood-color=&quot;%23000000&quot; flood-opacity=&quot;0.25&quot;/%3E%3C/filter%3E%3C/defs%3E%3Crect width=&quot;1024&quot; height=&quot;1024&quot; rx=&quot;220&quot; fill=&quot;url(%23bg)&quot;/%3E%3Cg filter=&quot;url(%23shadow)&quot;%3E%3Crect x=&quot;245&quot; y=&quot;170&quot; width=&quot;560&quot; height=&quot;684&quot; rx=&quot;72&quot; fill=&quot;%23FFF7EB&quot;/%3E%3Crect x=&quot;245&quot; y=&quot;170&quot; width=&quot;560&quot; height=&quot;684&quot; rx=&quot;72&quot; fill=&quot;none&quot; stroke=&quot;%2317120C&quot; stroke-width=&quot;34&quot;/%3E%3Cpath d=&quot;M245 286H160M245 420H160M245 554H160M245 688H160&quot; stroke=&quot;%2317120C&quot; stroke-width=&quot;44&quot; stroke-linecap=&quot;round&quot;/%3E%3Ccircle cx=&quot;525&quot; cy=&quot;405&quot; r=&quot;112&quot; fill=&quot;%2317120C&quot;/%3E%3Cpath d=&quot;M350 700C378 596 438 548 525 548C612 548 672 596 700 700&quot; fill=&quot;%2317120C&quot;/%3E%3Cpath d=&quot;M640 296H735M640 374H735&quot; stroke=&quot;%23F18A2B&quot; stroke-width=&quot;32&quot; stroke-linecap=&quot;round&quot;/%3E%3Ccircle cx=&quot;720&quot; cy=&quot;742&quot; r=&quot;82&quot; fill=&quot;%2317120C&quot;/%3E%3Cpath d=&quot;M680 742H760M720 702V782&quot; stroke=&quot;%23F7A24A&quot; stroke-width=&quot;30&quot; stroke-linecap=&quot;round&quot;/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+<link rel="stylesheet" href="style.css"></head>
+<body class="locked">
+<div class="lock-screen" id="lock-screen">
+  <form class="lock-card" id="lock-form">
+    <div class="lock-icon"><i class="ti ti-lock"></i></div>
+    <h2>Contacts Locked</h2>
+    <p>Password डालकर contacts खोलें</p>
+    <div class="password-wrap"><i class="ti ti-key"></i><input type="password" id="lock-password" inputmode="numeric" maxlength="4" autocomplete="off" autofocus="" placeholder="••••" aria-label="Enter password"></div>
+    <button class="unlock-btn" type="submit"><i class="ti ti-lock-open"></i> Unlock</button>
+    <a class="forgot-btn" id="forgot-password" href="tel:+916299510063"><i class="ti ti-phone-call"></i> Forgot password? Dipak Kumar को call करें</a>
+    <div class="lock-error" id="lock-error"></div>
+  </form>
+</div>
+<div class="app">
+  <div class="header">
+    <h1><i class="ti ti-address-book"></i> My Contacts</h1>
+    <p id="total"></p>
+  </div>
+  <div class="controls">
+    <div class="search-wrap">
+      <i class="ti ti-search"></i>
+      <input type="text" id="search" placeholder="नाम या नंबर खोजें…" autocomplete="off">
+    </div>
+    <button class="btn" id="settings-btn"><i class="ti ti-settings"></i> Settings</button>
+  </div>
+  <div class="panel" id="panel">
+    <h3>Theme &amp; Display</h3>
+    <div style="margin-bottom:12px">
+      <p style="font-size:13px;color:var(--text2);margin-bottom:8px">Accent color चुनें</p>
+      <div class="theme-grid" id="theme-grid"></div>
+    </div>
+    <div class="feature-grid">
+      <label class="toggle-row">Favorites <input type="checkbox" id="feature-favorites" checked=""></label>
+      <label class="toggle-row">Right A-Z <input type="checkbox" id="feature-index" checked=""></label>
+      <label class="toggle-row">Contact photos <input type="checkbox" id="feature-photos" checked=""></label>
+      <label class="toggle-row">Letter groups <input type="checkbox" id="feature-groups" checked=""></label>
+    </div>
+    <button class="btn full-btn" id="fullscreen-btn" type="button"><i class="ti ti-maximize"></i> Full screen</button>
+    <div class="slider-row"><label>Font size</label><input type="range" min="12" max="20" value="15" step="1" id="fs"><span class="slider-val" id="fs-v">15px</span></div>
+    <div class="slider-row"><label>Card spacing</label><input type="range" min="2" max="16" value="6" step="2" id="sp"><span class="slider-val" id="sp-v">6px</span></div>
+  </div>
+  <div class="profile-card" id="profile-card">
+    <div class="avatar profile-photo" id="profile-avatar">D</div>
+    <div class="info">
+      <div class="name">Dipak Kumar</div>
+      <a class="phone" href="tel:+916299510063"><i class="ti ti-phone-call" style="font-size:12px"></i><span id="profile-photo-label">6299510063</span></a>
+    </div>
+  </div>
+  <div class="favorites" id="favorites"></div>
+  <div class="alpha-bar" id="alpha-bar"></div>
+  <div class="letter-pop" id="letter-pop"></div>
+  <div class="count" id="cnt"></div>
+  <div id="list"></div>
+</div>
+
+
+
+
+
+<script src="script.js" defer=""></script></body></html>
